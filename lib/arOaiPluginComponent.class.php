@@ -153,4 +153,29 @@ abstract class arOaiPluginComponent extends sfComponent
     $format = self::parseXmlFormatFromMetadataPrefix($metadataPrefix);
     include(QubitInformationObjectXmlCache::resourceExportFilePath($resource, $format, true));
   }
+
+
+  /**
+   * Get translations for an informatiObject
+   * @param QubitInformationObject $informationObject The object
+   * @param String $baseLanguage The base language (not considered as translation, so excluded)
+   * @return Array An array of langauges codes
+   */
+  public function getTranslations($informationObject, $baseLanguage = 'en')
+  {
+
+    if (get_class($informationObject) != 'QubitInformationObject') return;
+
+    $i18ns = $informationObject->informationObjectI18ns;
+
+    $translations = array();
+    foreach ($i18ns as $i18n)
+    {
+      if ($i18n->culture != $baseLanguage)
+        $translations[] = $i18n->culture;
+    }
+
+    return $translations;
+  }
+
 }

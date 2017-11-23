@@ -17,6 +17,15 @@
             <?php arOaiPluginComponent::includeCachedMetadata($record, $metadataPrefix) ?>
           <?php endif; ?>
         </metadata>
+        <translations>
+          <?php  $translations = arOaiPluginComponent::getTranslations($record); ?>
+          <?php foreach($translations as $translation): ?>
+            <translation>
+              <code><?php echo $translation; ?></code>
+              <label><?php echo format_language($translation); ?></label>
+            </translation>
+          <?php endforeach; ?>
+        </translations>
         <?php include('_about.xml.php') ?>
       </record>
     <?php endif; ?>

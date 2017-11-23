@@ -28,6 +28,8 @@ class arOaiPluginListRecordsComponent extends arOaiPluginComponent
 {
   public function execute($request)
   {
+    $this->getUser()->setCulture('en');
+
     $this->requestname = $request;
 
     $this->setUpdateParametersFromRequest($request);
