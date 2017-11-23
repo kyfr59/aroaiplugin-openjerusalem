@@ -178,4 +178,47 @@ abstract class arOaiPluginComponent extends sfComponent
     return $translations;
   }
 
+  /**
+   * Return the ID of high level parent in the hierarchy
+   * @param QubitInformationObject $informationObject The object
+   * @return Integer The top parent ID
+   */
+  public static function getTopLevelParent($informationObject) {
+
+    if (get_class($informationObject) != 'QubitInformationObject') return;
+
+    if ($informationObject->parent) {
+      $topLevelParent = $informationObject->parent;
+      while ($topLevelParent->parent && $topLevelParent->parent->id != QubitInformationObject::ROOT_ID)
+      {
+        $topLevelParent = $topLevelParent->parent;
+      }
+    }
+    return $topLevelParent->id;
+  }
+
+
+  /**
+   * Return the ID of high level parent in the hierarchy
+   * @param QubitInformationObject $informationObject The object
+   * @return Integer The level
+   */
+  public static function getItemLevel($informationObject) {
+
+    if (get_class($informationObject) != 'QubitInformationObject') return;
+
+    $itemLevel = 1;
+
+    if ($informationObject->parent) {
+      $topLevelParent = $informationObject->parent;
+      $itemLevel = 1;
+      while ($topLevelParent->parent)
+      {
+        $topLevelParent = $topLevelParent->parent;
+        $itemLevel++;
+      }
+    }
+    return $itemLevel;
+  }
+
 }
