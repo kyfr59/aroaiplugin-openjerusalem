@@ -41,6 +41,10 @@ class arOaiPluginGetRecordComponent extends arOaiPluginComponent
     }
     else
     {
+      // Set default culture on "Language" param pass in URL, otherwise English
+      $language = isset($request->Language) ? $request->Language : 'en';
+      $this->getUser()->setCulture($language);
+
       $this->metadataPrefix = $request->metadataPrefix;
       $request->setAttribute('record', $this->record);
       $this->setRequestAttributes($request);

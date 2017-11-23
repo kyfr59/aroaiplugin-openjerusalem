@@ -4,7 +4,7 @@ all:
     IdentifyMandatory:             []
     ListIdentifiersAllowed:        [verb, metadataPrefix, from, until, set, resumptionToken, cursor]
     ListIdentifiersMandatory:      [metadataPrefix]
-    GetRecordAllowed:              [verb, identifier, metadataPrefix]
+    GetRecordAllowed:              [verb, identifier, metadataPrefix, Language]
     GetRecordMandatory:            [identifier, metadataPrefix]
     ListMetadataFormatsAllowed:    [verb, identifier]
     ListMetadataFormatsMandatory:  []
