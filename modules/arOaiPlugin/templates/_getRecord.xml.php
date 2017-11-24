@@ -16,6 +16,16 @@
             <?php arOaiPluginComponent::includeCachedMetadata($record, $metadataPrefix) ?>
           <?php endif; ?>
         </metadata>
+        <hierarchy>
+          <atomId><?php echo $record->id ?></atomId>
+          <parentId><?php echo $record->parent->id ?></parentId>
+          <topParentId><?php echo arOaiPluginComponent::getTopLevelParent($record) ?></topParentId>
+          <level><?php echo arOaiPluginComponent::getItemLevel($record) ?></level>
+          <order><?php echo $record->lft ?></order>
+          <type><?php echo $record->levelOfDescription ?></type>
+          <oaiIdentifier><?php echo $record->getOaiIdentifier() ?></oaiIdentifier>
+          <url><?php echo esc_specialchars(sfConfig::get('app_siteBaseUrl') .'/'.$record->slug) ?></url>
+        </hierarchy>
         <?php if (count($record->digitalObjects)): ?>
           <?php include('_about.xml.php') ?>
         <?php endif; ?>
