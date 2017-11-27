@@ -36,6 +36,15 @@
           <oaiIdentifier><?php echo $record->getOaiIdentifier() ?></oaiIdentifier>
           <url><?php echo esc_specialchars(sfConfig::get('app_siteBaseUrl') .'/'.$record->slug) ?></url>
         </hierarchy>
+        <files>
+        <?php
+        if(count($objects = $record->digitalObjects)) {
+          foreach($objects as $object) {
+            echo '<url name="'.$object->getName().'" type="master">'.$object->getPublicPath().'</url>';
+          }
+        }
+        ?>
+        </files>
         <extra>
           <referenceCode><?php echo $record->referenceCode ?></referenceCode>
           <repository><?php echo esc_specialchars(strval($record->repository->authorizedFormOfName)) ?></repository>
