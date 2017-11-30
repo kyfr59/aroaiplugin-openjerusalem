@@ -48,11 +48,9 @@
         <extra>
           <referenceCode><?php echo $record->referenceCode ?></referenceCode>
           <repository><?php echo esc_specialchars(strval($record->repository->authorizedFormOfName)) ?></repository>
-          <publicatonNotes>
           <?php foreach ($record->getNotesByType(array('noteTypeId' => QubitTerm::PUBLICATION_NOTE_ID)) as $note): ?>
-            <publicatonNote><?php echo $note->getContent() ?></publicatonNote>
+            <publicatonNotes><?php echo $note->getContent() ?></publicatonNotes>
           <?php endforeach; ?>
-          </publicatonNotes>
           <?php if ($record->levelOfDescription == 'Fonds' || $record->levelOfDescription == 'Series'): ?>
             <archivalHistory><?php echo $record->getArchivalHistory() ?></archivalHistory>
             <aquisition><?php echo $record->getAcquisition() ?></aquisition>
@@ -65,65 +63,44 @@
             <rules><?php echo $record->getRules() ?></rules>
             <descriptionStatus><?php echo $record->descriptionStatus ?></descriptionStatus>
             <datesOfCreation><?php echo $record->getRevisionHistory() ?></datesOfCreation>
-            <languagesOfDescription>
             <?php foreach ($record->languageOfDescription as $code): ?>
-              <language><?php echo format_language($code) ?></language>
+              <languagesOfDescription><?php echo format_language($code) ?></languagesOfDescription>
             <?php endforeach; ?>
-            </languagesOfDescription>
-            <scriptsOfDescription>
             <?php foreach ($record->scriptOfDescription as $code): ?>
-              <script><?php echo format_language($code) ?></script>
+              <scriptsOfDescription><?php echo format_language($code) ?></scriptsOfDescription>
             <?php endforeach; ?>
-            </scriptsOfDescription>
+            <?php foreach ($record->getNotesByType(array('noteTypeId' => QubitTerm::ARCHIVIST_NOTE_ID)) as $item): ?>
+              <archivistsNotes><?php echo $item->getContent(array('cultureFallback' => true)) ?></archivistsNotes>
+            <?php endforeach; ?>
           <?php else: ?>
-            <alternativeIdentifiers>
             <?php foreach ($record->getProperties(null, 'alternativeIdentifiers') as $item): ?>
-              <identifier><?php echo render_value($item->name) ?></identifier>
+              <alternativeIdentifiers><?php echo render_value($item->name) ?></alternativeIdentifiers>
             <?php endforeach; ?>
-            </alternativeIdentifiers>
-            <languagesOfMaterials>
             <?php foreach ($record->language as $code): ?>
-              <language><?php echo format_language($code) ?></language>
-             <?php endforeach; ?>
-            </languagesOfMaterials>
-            <relatedDescriptions>
+              <languagesOfMaterials><?php echo format_language($code) ?></languagesOfMaterials>
+            <?php endforeach; ?>
               <?php foreach ($record->relationsRelatedBysubjectId as $item): ?>
                 <?php if (isset($item->type) && QubitTerm::RELATED_MATERIAL_DESCRIPTIONS_ID == $item->type->id): ?>
-                  <description><?php echo render_title($item->object) ?></description>
+                  <relatedDescriptions><?php echo render_title($item->object) ?></relatedDescriptions>
                 <?php endif; ?>
               <?php endforeach; ?>
-            </relatedDescriptions>
-            <subjectAccessPoints>
             <?php foreach ($record->getSubjectAccessPoints() as $item): ?>
             <?php foreach ($item->term->ancestors->andSelf()->orderBy('lft') as $key => $subject): ?>
               <?php if (QubitTerm::ROOT_ID == $subject->id) continue; ?>
-              <subject><?php echo $subject->__toString() ?></subject>
+              <subjectAccessPoints><?php echo $subject->__toString() ?></subjectAccessPoints>
             <?php endforeach; ?>
             <?php endforeach; ?>
-            </subjectAccessPoints>
-            <subjectAccessPoints>
-            <?php foreach ($record->getSubjectAccessPoints() as $item): ?>
-            <?php foreach ($item->term->ancestors->andSelf()->orderBy('lft') as $key => $subject): ?>
-              <?php if (QubitTerm::ROOT_ID == $subject->id) continue; ?>
-              <point><?php echo $subject->__toString() ?></point>
-            <?php endforeach; ?>
-            <?php endforeach; ?>
-            </subjectAccessPoints>
-            <placeAccessPoints>
             <?php foreach ($record->getPlaceAccessPoints() as $item): ?>
             <?php foreach ($item->term->ancestors->andSelf()->orderBy('lft') as $key => $subject): ?>
               <?php if (QubitTerm::ROOT_ID == $subject->id) continue; ?>
-              <point><?php echo $subject->__toString() ?></point>
+              <placeAccessPoints><?php echo $subject->__toString() ?></placeAccessPoints>
             <?php endforeach; ?>
             <?php endforeach; ?>
-            </placeAccessPoints>
-            <nameAccessPoints>
             <?php foreach ($record->relationsRelatedBysubjectId as $item): ?>
             <?php if (isset($item->type) && QubitTerm::NAME_ACCESS_POINT_ID == $item->type->id): ?>
-              <point><?php echo $item->object ?></point>
+              <nameAccessPoints><?php echo $item->object ?></nameAccessPoints>
             <?php endif; ?>
             <?php endforeach; ?>
-            </nameAccessPoints>
           <?php endif; ?>
         </extra>
         <?php include('_about.xml.php') ?>
