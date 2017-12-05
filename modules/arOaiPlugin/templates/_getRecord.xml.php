@@ -32,6 +32,23 @@
           <?php foreach ($record->getNotesByType(array('noteTypeId' => QubitTerm::PUBLICATION_NOTE_ID)) as $note): ?>
             <publicatonNotes><?php echo $note->getContent() ?></publicatonNotes>
           <?php endforeach; ?>
+          <?php foreach ($record->getDates() as $item): ?>
+            <dates>
+              <date><?php echo $date = $item->getDate(); ?></date>
+              <?php
+                $startEndDate = '';
+                $startDate    = Qubit::renderDate($item->startDate);
+                $endDate      = Qubit::renderDate($item->endDate);
+                if ($startDate && $endDate)
+                  $startEndDate = $startDate. ' - '.$endDate;
+                elseif($startDate)
+                  $startEndDate = $startDate;
+                elseif($endDate)
+                  $startEndDate = $endDate;
+              ?>
+              <startEndDate><?php echo $startEndDate; ?></startEndDate>
+            </dates>
+          <?php endforeach; ?>
           <?php if ($record->levelOfDescription == 'Fonds' || $record->levelOfDescription == 'Series'): ?>
             <archivalHistory><?php echo $record->getArchivalHistory() ?></archivalHistory>
             <aquisition><?php echo $record->getAcquisition() ?></aquisition>
@@ -39,6 +56,7 @@
             <accruals><?php echo $record->getAccruals() ?></accruals>
             <arrangement><?php echo $record->getArrangement() ?></arrangement>
             <findingAids><?php echo $record->getFindingAids() ?></findingAids>
+            <accessCondition><?php echo $record->getAccessConditions(array('cultureFallback' => true)) ?></accessCondition>
             <locationOfOriginals><?php echo $record->getLocationOfOriginals() ?></locationOfOriginals>
             <locationOfCopies><?php echo $record->getLocationOfCopies() ?></locationOfCopies>
             <rules><?php echo $record->getRules() ?></rules>
@@ -55,7 +73,7 @@
             <?php endforeach; ?>
           <?php else: ?>
             <?php foreach ($record->getProperties(null, 'alternativeIdentifiers') as $item): ?>
-              <alternativeIdentifiers><?php echo render_value($item->name) ?></alternativeIdentifiers>
+              <alternativeIdentifiers><?php echo render_value($item->name) .' - '. render_value($item->value) ?></alternativeIdentifiers>
             <?php endforeach; ?>
             <?php foreach ($record->language as $code): ?>
               <languagesOfMaterials><?php echo format_language($code) ?></languagesOfMaterials>
