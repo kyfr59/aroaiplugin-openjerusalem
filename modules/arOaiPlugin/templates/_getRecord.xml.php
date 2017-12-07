@@ -48,8 +48,8 @@
               ?>
               <startEndDate><?php echo $startEndDate; ?></startEndDate>
             </dates>
-            <arrangement><?php echo $record->getArrangement() ?></arrangement>
           <?php endforeach; ?>
+          <arrangement><?php echo $record->getArrangement() ?></arrangement>
           <?php if ($record->levelOfDescription == 'Fonds' || $record->levelOfDescription == 'Series'): ?>
             <archivalHistory><?php echo $record->getArchivalHistory() ?></archivalHistory>
             <aquisition><?php echo $record->getAcquisition() ?></aquisition>
