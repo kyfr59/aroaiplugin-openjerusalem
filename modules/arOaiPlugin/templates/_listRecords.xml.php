@@ -67,13 +67,13 @@
               ?>
               <startEndDate><?php echo $startEndDate; ?></startEndDate>
             </dates>
+            <arrangement><?php echo $record->getArrangement() ?></arrangement>
           <?php endforeach; ?>
           <?php if ($record->levelOfDescription == 'Fonds' || $record->levelOfDescription == 'Series'): ?>
             <archivalHistory><?php echo $record->getArchivalHistory() ?></archivalHistory>
             <aquisition><?php echo $record->getAcquisition() ?></aquisition>
             <appraisal><?php echo $record->getAppraisal() ?></appraisal>
             <accruals><?php echo $record->getAccruals() ?></accruals>
-            <arrangement><?php echo $record->getArrangement() ?></arrangement>
             <findingAids><?php echo $record->getFindingAids() ?></findingAids>
             <accessCondition><?php echo $record->getAccessConditions(array('cultureFallback' => true)) ?></accessCondition>
             <locationOfOriginals><?php echo $record->getLocationOfOriginals() ?></locationOfOriginals>
