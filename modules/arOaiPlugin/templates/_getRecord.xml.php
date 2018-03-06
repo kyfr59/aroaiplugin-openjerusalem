@@ -49,6 +49,9 @@
               <startEndDate><?php echo $startEndDate; ?></startEndDate>
             </dates>
           <?php endforeach; ?>
+          <?php foreach ($record->getCreators() as $item): ?>
+            <creatorLink><?php echo url_for($item, array('absolute' => true)) ?></creatorLink>
+          <?php endforeach; ?>          
           <arrangement><?php echo $record->getArrangement() ?></arrangement>
           <?php if ($record->levelOfDescription == 'Fonds' || $record->levelOfDescription == 'Series'): ?>
             <archivalHistory><?php echo $record->getArchivalHistory() ?></archivalHistory>
