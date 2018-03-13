@@ -52,7 +52,7 @@
           <?php foreach ($record->getCreators() as $item): ?>
             <creatorLink><![CDATA[<?php echo url_for($item, array('absolute' => true)) ?>]]></creatorLink>
           <?php endforeach; ?>          
-          <arrangement><![CDATA[<?php echo $record->getArrangement() ?></arrangement>
+          <arrangement><![CDATA[<?php echo $record->getArrangement() ?>]]></arrangement>
           <?php if ($record->levelOfDescription == 'Fonds' || $record->levelOfDescription == 'Series'): ?>
             <archivalHistory><![CDATA[<?php echo $record->getArchivalHistory() ?>]]></archivalHistory>
             <aquisition><![CDATA[<?php echo $record->getAcquisition() ?>]]></aquisition>
