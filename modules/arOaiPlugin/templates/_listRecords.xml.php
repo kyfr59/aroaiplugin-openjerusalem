@@ -93,14 +93,14 @@
             <?php foreach ($record->getNotesByType(array('noteTypeId' => QubitTerm::ARCHIVIST_NOTE_ID)) as $item): ?>
               <archivistsNotes><![CDATA[<?php echo $item->getContent(array('cultureFallback' => true)) ?>]]></archivistsNotes>
             <?php endforeach; ?>
+            <?php foreach ($record->language as $code): ?>
+              <languagesOfMaterials><![CDATA[<?php echo format_language($code) ?>]]></languagesOfMaterials>
+            <?php endforeach; ?>            
           <?php else: ?>
             <?php foreach ($record->getProperties(null, 'alternativeIdentifiers') as $item): ?>
               <alternativeIdentifiers><![CDATA[<?php echo render_value($item->name) .' - '. render_value($item->value) ?>]]></alternativeIdentifiers>
             <?php endforeach; ?>
-            <?php foreach ($record->language as $code): ?>
-              <languagesOfMaterials><![CDATA[<?php echo format_language($code) ?>]]></languagesOfMaterials>
-            <?php endforeach; ?>
-              <?php foreach ($record->relationsRelatedBysubjectId as $item): ?>
+            <?php foreach ($record->relationsRelatedBysubjectId as $item): ?>
                 <?php if (isset($item->type) && QubitTerm::RELATED_MATERIAL_DESCRIPTIONS_ID == $item->type->id): ?>
                   <relatedDescriptions><![CDATA[<?php echo render_title($item->object) ?>]]></relatedDescriptions>
                 <?php endif; ?>
