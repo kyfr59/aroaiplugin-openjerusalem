@@ -46,14 +46,14 @@
         ?>
         </files>
         <extra>
-          <referenceCode><?php echo $record->referenceCode ?></referenceCode>
-          <repository><?php echo esc_specialchars(strval($record->repository->authorizedFormOfName)) ?></repository>
+          <referenceCode><![CDATA[<?php echo $record->referenceCode ?>]]></referenceCode>
+          <repository><![CDATA[<?php echo esc_specialchars(strval($record->repository->authorizedFormOfName)) ?>]]></repository>
           <?php foreach ($record->getNotesByType(array('noteTypeId' => QubitTerm::PUBLICATION_NOTE_ID)) as $note): ?>
-            <publicatonNotes><?php echo $note->getContent() ?></publicatonNotes>
+            <publicatonNotes><![CDATA[<?php echo $note->getContent() ?>]]></publicatonNotes>
           <?php endforeach; ?>
           <?php foreach ($record->getDates() as $item): ?>
             <dates>
-              <date><?php echo $date = $item->getDate(); ?></date>
+              <date><![CDATA[<?php echo $date = $item->getDate(); ?>]]></date>
               <?php
                 $startEndDate = '';
                 $startDate = Qubit::renderDate($item->startDate);
@@ -65,61 +65,61 @@
                 elseif($endDate)
                   $startEndDate = $endDate;
               ?>
-              <startEndDate><?php echo $startEndDate; ?></startEndDate>
+              <startEndDate><![CDATA[<?php echo $startEndDate; ?>]]></startEndDate>
             </dates>
           <?php endforeach; ?>
           <?php foreach ($record->getCreators() as $item): ?>
-            <creatorLink><?php echo url_for($item, array('absolute' => true)) ?></creatorLink>
+            <creatorLink><![CDATA[<?php echo url_for($item, array('absolute' => true)) ?>]]></creatorLink>
           <?php endforeach; ?>           
-          <arrangement><?php echo $record->getArrangement() ?></arrangement>
+          <arrangement><![CDATA[<?php echo $record->getArrangement() ?>]]></arrangement>
           <?php if ($record->levelOfDescription == 'Fonds' || $record->levelOfDescription == 'Series'): ?>
-            <archivalHistory><?php echo $record->getArchivalHistory() ?></archivalHistory>
-            <aquisition><?php echo $record->getAcquisition() ?></aquisition>
-            <appraisal><?php echo $record->getAppraisal() ?></appraisal>
-            <accruals><?php echo $record->getAccruals() ?></accruals>
-            <findingAids><?php echo $record->getFindingAids() ?></findingAids>
-            <accessCondition><?php echo $record->getAccessConditions(array('cultureFallback' => true)) ?></accessCondition>
-            <locationOfOriginals><?php echo $record->getLocationOfOriginals() ?></locationOfOriginals>
-            <locationOfCopies><?php echo $record->getLocationOfCopies() ?></locationOfCopies>
-            <rules><?php echo $record->getRules() ?></rules>
-            <descriptionStatus><?php echo $record->descriptionStatus ?></descriptionStatus>
-            <datesOfCreation><?php echo $record->getRevisionHistory() ?></datesOfCreation>
+            <archivalHistory><![CDATA[<?php echo $record->getArchivalHistory() ?>]]></archivalHistory>
+            <aquisition><![CDATA[<?php echo $record->getAcquisition() ?>]]></aquisition>
+            <appraisal><![CDATA[<?php echo $record->getAppraisal() ?>]]></appraisal>
+            <accruals><![CDATA[<?php echo $record->getAccruals() ?>]]></accruals>
+            <findingAids><![CDATA[<?php echo $record->getFindingAids() ?>]]></findingAids>
+            <accessCondition><![CDATA[<?php echo $record->getAccessConditions(array('cultureFallback' => true)) ?>]]></accessCondition>
+            <locationOfOriginals><![CDATA[<?php echo $record->getLocationOfOriginals() ?>]]></locationOfOriginals>
+            <locationOfCopies><![CDATA[<?php echo $record->getLocationOfCopies() ?>]]></locationOfCopies>
+            <rules><![CDATA[<?php echo $record->getRules() ?>]]></rules>
+            <descriptionStatus><![CDATA[<?php echo $record->descriptionStatus ?>]]></descriptionStatus>
+            <datesOfCreation><![CDATA[<?php echo $record->getRevisionHistory() ?>]]></datesOfCreation>
             <?php foreach ($record->languageOfDescription as $code): ?>
-              <languagesOfDescription><?php echo format_language($code) ?></languagesOfDescription>
+              <languagesOfDescription><![CDATA[<?php echo format_language($code) ?>]]></languagesOfDescription>
             <?php endforeach; ?>
             <?php foreach ($record->scriptOfDescription as $code): ?>
-              <scriptsOfDescription><?php echo format_language($code) ?></scriptsOfDescription>
+              <scriptsOfDescription><![CDATA[<?php echo format_language($code) ?>]]></scriptsOfDescription>
             <?php endforeach; ?>
             <?php foreach ($record->getNotesByType(array('noteTypeId' => QubitTerm::ARCHIVIST_NOTE_ID)) as $item): ?>
-              <archivistsNotes><?php echo $item->getContent(array('cultureFallback' => true)) ?></archivistsNotes>
+              <archivistsNotes><![CDATA[<?php echo $item->getContent(array('cultureFallback' => true)) ?>]]></archivistsNotes>
             <?php endforeach; ?>
           <?php else: ?>
             <?php foreach ($record->getProperties(null, 'alternativeIdentifiers') as $item): ?>
-              <alternativeIdentifiers><?php echo render_value($item->name) .' - '. render_value($item->value) ?></alternativeIdentifiers>
+              <alternativeIdentifiers><![CDATA[<?php echo render_value($item->name) .' - '. render_value($item->value) ?>]]></alternativeIdentifiers>
             <?php endforeach; ?>
             <?php foreach ($record->language as $code): ?>
-              <languagesOfMaterials><?php echo format_language($code) ?></languagesOfMaterials>
+              <languagesOfMaterials><![CDATA[<?php echo format_language($code) ?>]]></languagesOfMaterials>
             <?php endforeach; ?>
               <?php foreach ($record->relationsRelatedBysubjectId as $item): ?>
                 <?php if (isset($item->type) && QubitTerm::RELATED_MATERIAL_DESCRIPTIONS_ID == $item->type->id): ?>
-                  <relatedDescriptions><?php echo render_title($item->object) ?></relatedDescriptions>
+                  <relatedDescriptions><![CDATA[<?php echo render_title($item->object) ?>]]></relatedDescriptions>
                 <?php endif; ?>
               <?php endforeach; ?>
             <?php foreach ($record->getSubjectAccessPoints() as $item): ?>
             <?php foreach ($item->term->ancestors->andSelf()->orderBy('lft') as $key => $subject): ?>
               <?php if (QubitTerm::ROOT_ID == $subject->id) continue; ?>
-              <subjectAccessPoints><?php echo $subject->__toString() ?></subjectAccessPoints>
+              <subjectAccessPoints><![CDATA[<?php echo $subject->__toString() ?>]]></subjectAccessPoints>
             <?php endforeach; ?>
             <?php endforeach; ?>
             <?php foreach ($record->getPlaceAccessPoints() as $item): ?>
             <?php foreach ($item->term->ancestors->andSelf()->orderBy('lft') as $key => $subject): ?>
               <?php if (QubitTerm::ROOT_ID == $subject->id) continue; ?>
-              <placeAccessPoints><?php echo $subject->__toString() ?></placeAccessPoints>
+              <placeAccessPoints><![CDATA[<?php echo $subject->__toString() ?>]]></placeAccessPoints>
             <?php endforeach; ?>
             <?php endforeach; ?>
             <?php foreach ($record->relationsRelatedBysubjectId as $item): ?>
             <?php if (isset($item->type) && QubitTerm::NAME_ACCESS_POINT_ID == $item->type->id): ?>
-              <nameAccessPoints><?php echo $item->object ?></nameAccessPoints>
+              <nameAccessPoints><![CDATA[<?php echo $item->object ?>]]></nameAccessPoints>
             <?php endif; ?>
             <?php endforeach; ?>
           <?php endif; ?>
