@@ -72,7 +72,9 @@
             <creatorLink><![CDATA[<?php echo url_for($item, array('absolute' => true)) ?>]]></creatorLink>
           <?php endforeach; ?>           
           <arrangement><![CDATA[<?php echo $record->getArrangement() ?>]]></arrangement>
+
           <?php if ($record->levelOfDescription == 'Fonds' || $record->levelOfDescription == 'Series'): ?>
+
             <archivalHistory><![CDATA[<?php echo $record->getArchivalHistory() ?>]]></archivalHistory>
             <aquisition><![CDATA[<?php echo $record->getAcquisition() ?>]]></aquisition>
             <appraisal><![CDATA[<?php echo $record->getAppraisal() ?>]]></appraisal>
@@ -96,7 +98,19 @@
             <?php foreach ($record->language as $code): ?>
               <languagesOfMaterials><![CDATA[<?php echo format_language($code) ?>]]></languagesOfMaterials>
             <?php endforeach; ?>            
+            <?php foreach ($record->relationsRelatedBysubjectId as $item): ?>
+              <?php if (isset($item->type) && QubitTerm::RELATED_MATERIAL_DESCRIPTIONS_ID == $item->type->id): ?>
+                  <relatedDescriptions><?php echo render_title($item->object) ?> [[<?php echo url_for($item->object, array('absolute' => true)) ?>]]</relatedDescriptions>
+              <?php endif; ?>
+            <?php endforeach; ?>
+            <?php foreach ($record->relationsRelatedByobjectId as $item): ?>
+              <?php if (isset($item->type) && QubitTerm::RELATED_MATERIAL_DESCRIPTIONS_ID == $item->type->id): ?>
+                <relatedDescriptions><?php echo render_title($item->subject) ?>  [[<?php echo url_for($item->subject, array('absolute' => true)) ?>]]</relatedDescriptions>
+              <?php endif; ?>
+            <?php endforeach; ?>
+
           <?php else: ?>
+
             <?php foreach ($record->getProperties(null, 'alternativeIdentifiers') as $item): ?>
               <alternativeIdentifiers><![CDATA[<?php echo render_value($item->name) .' - '. render_value($item->value) ?>]]></alternativeIdentifiers>
             <?php endforeach; ?>
@@ -122,6 +136,7 @@
               <nameAccessPoints><![CDATA[<?php echo $item->object ?>]]></nameAccessPoints>
             <?php endif; ?>
             <?php endforeach; ?>
+
           <?php endif; ?>
         </extra>
         <?php include('_about.xml.php') ?>
