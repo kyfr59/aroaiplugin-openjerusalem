@@ -47,6 +47,7 @@
         </files>
         <extra>
           <referenceCode><![CDATA[<?php echo $record->referenceCode ?>]]></referenceCode>
+          <accessCondition><![CDATA[<?php echo $record->getAccessConditions(array('cultureFallback' => true)) ?>]]></accessCondition>
           <repository><![CDATA[<?php echo esc_specialchars(strval($record->repository->authorizedFormOfName)) ?>]]></repository>
           <?php foreach ($record->getNotesByType(array('noteTypeId' => QubitTerm::PUBLICATION_NOTE_ID)) as $note): ?>
             <publicatonNotes><![CDATA[<?php echo $note->getContent() ?>]]></publicatonNotes>

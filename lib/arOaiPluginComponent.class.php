@@ -111,6 +111,7 @@ abstract class arOaiPluginComponent extends sfComponent
     }
 
     $options = array_merge($presetOptions, $options);
+    $options['filterDrafts'] = true;
 
     // Get the records according to the limit dates and collection
     $update = QubitInformationObject::getUpdatedRecords($options);
