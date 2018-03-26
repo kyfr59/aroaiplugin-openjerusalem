@@ -86,7 +86,7 @@
               <relatedDescriptions><?php echo render_title($item->subject) ?>  [[<?php echo url_for($item->subject, array('absolute' => true)) ?>]]</relatedDescriptions>
             <?php endif; ?>
           <?php endforeach; ?>
-          
+
 
           <?php if ($record->levelOfDescription == 'Fonds' || $record->levelOfDescription == 'Series'): ?>
 
@@ -119,11 +119,6 @@
             <?php foreach ($record->getProperties(null, 'alternativeIdentifiers') as $item): ?>
               <alternativeIdentifiers><![CDATA[<?php echo render_value($item->name) .' - '. render_value($item->value) ?>]]></alternativeIdentifiers>
             <?php endforeach; ?>
-            <?php foreach ($record->relationsRelatedBysubjectId as $item): ?>
-                <?php if (isset($item->type) && QubitTerm::RELATED_MATERIAL_DESCRIPTIONS_ID == $item->type->id): ?>
-                  <relatedDescriptions><![CDATA[<?php echo render_title($item->object) ?>]]></relatedDescriptions>
-                <?php endif; ?>
-              <?php endforeach; ?>
             <?php foreach ($record->getSubjectAccessPoints() as $item): ?>
             <?php foreach ($item->term->ancestors->andSelf()->orderBy('lft') as $key => $subject): ?>
               <?php if (QubitTerm::ROOT_ID == $subject->id) continue; ?>
