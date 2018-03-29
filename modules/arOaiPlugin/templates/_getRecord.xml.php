@@ -52,9 +52,29 @@
               <startEndDate><![CDATA[<?php echo $startEndDate; ?>]]></startEndDate>
             </dates>
           <?php endforeach; ?>
+
           <?php foreach ($record->getCreators() as $item): ?>
             <creatorLink><![CDATA[<?php echo url_for($item, array('absolute' => true)) ?>]]></creatorLink>
           <?php endforeach; ?>          
+
+          <?php if (count($record->getCreators())>0): ?>
+            <?php foreach ($record->getCreators() as $item): ?>
+              <creatorLink><![CDATA[<?php echo url_for($item, array('absolute' => true)) ?>]]></creatorLink>
+            <?php endforeach; ?>
+          <?php else: ?>  
+            <?php
+            foreach ($record->ancestors->andSelf()->orderBy('rgt') as $ancestor)
+                  if (0 < count($ancestor->getCreators()))
+                    break;
+            ?>
+            <?php foreach ($ancestor->getCreators() as $item): ?>
+              <?php if (!isset($actorsShown[$item->id])): ?>
+                <?php $actorsShown[$item->id] = true; ?>
+                  <creatorLink><![CDATA[<?php echo url_for($item, array('absolute' => true)) ?>]]></creatorLink>
+              <?php endif; ?>
+            <?php endforeach; ?>
+          <?php endif; ?>  
+
           <arrangement><![CDATA[<?php echo $record->getArrangement() ?>]]></arrangement>
           <?php foreach ($record->relationsRelatedBysubjectId as $item): ?>
             <?php if (isset($item->type) && QubitTerm::RELATED_MATERIAL_DESCRIPTIONS_ID == $item->type->id): ?>
